@@ -3,6 +3,6 @@
 from math import floor as Round
 
 
-def floor(n: float) -> float:
+def floor(n: float) -> int:
     """floors a float"""
     return round(n)
