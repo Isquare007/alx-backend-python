@@ -3,10 +3,11 @@
 inherits from unittest.TestCase"""
 from parameterized import parameterized
 from unittest.mock import patch, Mock
+from unittest import TestCase, mock
 import unittest
 
 
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -45,3 +46,22 @@ class TestGetJson(unittest.TestCase):
 
         mock_get.assert_called_once_with(test_url)
         self.assertEqual(result, test_payload)
+        
+class TestClass:
+    def a_method(self):
+        return 42
+
+    @memoize
+    def a_property(self):
+        return self.a_method()
+
+class TestMemoize(TestCase):
+    def test_memoize(self):
+        with mock.patch.object(TestClass, 'a_method') as mock_method:
+            instance = TestClass()
+            mock_method.return_value = 42
+            result1 = instance.a_property
+            result2 = instance.a_property
+            mock_method.assert_called_once()
+            self.assertEqual(result1, 42)
+            self.assertEqual(result2, 42)
