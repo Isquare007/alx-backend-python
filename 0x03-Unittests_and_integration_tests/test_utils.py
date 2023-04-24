@@ -2,10 +2,10 @@
 """Create a TestAccessNestedMap class that
 inherits from unittest.TestCase"""
 from parameterized import parameterized
-from unittest.mock import patch, Mock
-from unittest import TestCase, mock
 import unittest
-
+from unittest.mock import patch
+from utils import (access_nested_map, get_json, memoize)
+import requests
 
 from utils import access_nested_map, get_json, memoize
 
